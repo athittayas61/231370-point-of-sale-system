@@ -3,6 +3,11 @@
     <form @submit.prevent @keydown.enter.prevent="addItemManually">
       <fieldset>
         <legend>Scan</legend>
+        <StreamBarcodeReader @decode="addItem"></StreamBarcodeReader>
+        <ImageBarcodeReader
+          @decode="addItem"
+          @error="onError"
+        ></ImageBarcodeReader>
         <input v-model="barcode" type="text" placeholder="type code" />
         <button @click.prevent="addItemManually">Add</button>
       </fieldset>
@@ -37,8 +42,14 @@ import Component from 'vue-class-component'
 import { findIndex, sum } from 'lodash'
 import { Product } from '@/store/models'
 import { findProductById } from '@/_services/fake-db'
+import { StreamBarcodeReader, ImageBarcodeReader } from 'vue-barcode-reader'
 
-@Component
+@Component({
+  components: {
+    StreamBarcodeReader,
+    ImageBarcodeReader
+  }
+})
 export default class Scan extends Vue {
   basket: Array<Product & { quantity: number }> = []
   barcode = ''
