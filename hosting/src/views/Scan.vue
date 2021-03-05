@@ -41,17 +41,18 @@ import Vue from 'vue'
 import Component from 'vue-class-component'
 import { findIndex, sum } from 'lodash'
 import { Product } from '@/store/models'
-import { findProductById } from '@/_services/fake-db'
 import { StreamBarcodeReader, ImageBarcodeReader } from 'vue-barcode-reader'
+import { mapState } from 'vuex'
 
 @Component({
   components: {
     StreamBarcodeReader,
     ImageBarcodeReader
-  }
+  },
+  computed: mapState(['basket'])
 })
 export default class Scan extends Vue {
-  basket: Array<Product & { quantity: number }> = []
+  basket!: Array<Product & { quantity: number }>
   barcode = ''
 
   get total (): number {
@@ -81,7 +82,7 @@ export default class Scan extends Vue {
     }
 
     // Else create new line-item
-    const product = findProductById(barcode)
+    const product = this.$store.getters.findProductById(barcode)
     const productWithQuantity = Object.assign(product, { quantity: 1 })
     this.basket.unshift(productWithQuantity)
 

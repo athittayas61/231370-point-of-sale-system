@@ -1,11 +1,11 @@
 import Vue from 'vue'
-// import { firestorePlugin } from 'vuefire'
+import { firestorePlugin } from 'vuefire'
 import App from './App.vue'
 import router from './router'
 import store from './store'
 
 Vue.config.productionTip = false
-// Vue.use(firestorePlugin)
+Vue.use(firestorePlugin)
 
 new Vue({
   router,
