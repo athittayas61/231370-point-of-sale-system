@@ -36,7 +36,7 @@ const store = new Vuex.Store<PossStore>({
 
       // Else create new line-item
       const product = store.getters.findProductById(barcode)
-      const productWithQuantity = Object.assign(product, { quantity: 1 })
+      const productWithQuantity = { ...product, quantity: 1 }
       state.basket.unshift(productWithQuantity)
     },
     incItem: (state, barcode: string): void => {
